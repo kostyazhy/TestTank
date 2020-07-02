@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+/*
+ *   The script controls the camera rotation
+ */
 public class MouseLook : MonoBehaviour
 {
     public Transform _transform;
-
+    // settings for turning different parts of the tank
     public enum RotationAxes
     {
         MouseXAndY = 0,
@@ -29,14 +33,14 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
-        if (axes == RotationAxes.MouseX) {
+        if (axes == RotationAxes.MouseX) { // turns only vertically
             _transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityHor, 0);
-        } else if (axes == RotationAxes.MouseY) {
+        } else if (axes == RotationAxes.MouseY) { // turns only horizontally
             _rotationX -= Input.GetAxis("Mouse Y") * sensitivityVert;
             _rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
             float rotationY = transform.localEulerAngles.y;
             _transform.localEulerAngles = new Vector3(_rotationX, rotationY, 0);
-        } else {
+        } else { // rotates horizontally and horizontally
             _rotationX -= Input.GetAxis("Mouse Y") * sensitivityVert;
             _rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
 

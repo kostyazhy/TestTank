@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/*
+ * The class controls the behavior of the barrel
+ */
+
 public class Shell : MonoBehaviour
 {
     Rigidbody _rigidbody;
@@ -10,19 +15,21 @@ public class Shell : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
+    // set the speed, place of appearance and launch the barrel
     public void Shoot(Transform spawnTransform, float speed)
     {
         _rigidbody.velocity = spawnTransform.forward * speed;
     }
 
+    // setting the behavior when colliding with the ground
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.transform.name);
         if (other.transform.name == "Terrain") {
             StartCoroutine(SphereIndicator());
         }
     }
 
+    // Creating a sphere on the spot and deleting objects
     private IEnumerator SphereIndicator()
     {
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);

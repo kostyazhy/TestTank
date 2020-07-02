@@ -3,24 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Crosshair : MonoBehaviour {
+
+/*
+ * The class controls the behavior of the scope
+ */
+public class Crosshair : MonoBehaviour
+{
+    public MovePlatform platform;
     public float focusedSpread;
     public float speedSpread;
 
     public PartCrosshair[] parts;
-    public MovePlatform platform;
 
     float _time;
     float _curSpread;
 
     private void OnEnable()
     {
-        Shot.LocatedTargetEvent += ChangeTarget;
+        BarrelControl.LocatedTargetEvent += ChangeTarget;
     }
 
     private void OnDisable()
     {
-        Shot.LocatedTargetEvent -= ChangeTarget;
+        BarrelControl.LocatedTargetEvent -= ChangeTarget;
     }
 
     private void Start()
@@ -34,6 +39,7 @@ public class Crosshair : MonoBehaviour {
         CrosshairUpdate();
     }
 
+    // Focuses the scope
     public void CrosshairUpdate()
     {
         _time = Time.deltaTime * speedSpread;
@@ -42,11 +48,11 @@ public class Crosshair : MonoBehaviour {
             part.trf.anchoredPosition = part.pos * _curSpread;
         }
     }
-
-    void ChangeTarget(bool target)
+    // changing the color of the sight
+    void ChangeTarget(bool goodTarget)
     {
         Color crosshairColor;
-        if (target) {
+        if (goodTarget) {
             crosshairColor = Color.white;
         } else {
             crosshairColor = Color.red;
@@ -57,6 +63,7 @@ public class Crosshair : MonoBehaviour {
         }
     }
 
+    // parts of the scope are stored
     [System.Serializable]
     public class PartCrosshair
     {

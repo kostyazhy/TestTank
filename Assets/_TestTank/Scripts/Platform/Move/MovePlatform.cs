@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/*
+ * The class controls the movement of the platform
+ */
 public class MovePlatform : MonoBehaviour {
 
     Transform _transform;
@@ -13,13 +17,12 @@ public class MovePlatform : MonoBehaviour {
 
     private void OnEnable()
     {
-        Shot.RotatePlatformEvent += RotatePlatform;
+        BarrelControl.RotatePlatformEvent += RotatePlatform;
     }
-
-
+    
     private void OnDisable()
     {
-        Shot.RotatePlatformEvent -= RotatePlatform;
+        BarrelControl.RotatePlatformEvent -= RotatePlatform;
     }
 
     void Start () {
@@ -34,7 +37,7 @@ public class MovePlatform : MonoBehaviour {
         moveDirection *= speed;
         moveDirection = _transform.TransformDirection(moveDirection);
         _charController.Move(moveDirection * Time.deltaTime);
-        _transform.Rotate(0, Input.GetAxis("Horizontal") * speedRotate, 0, Space.World);
+        RotatePlatform(Input.GetAxis("Horizontal") * speedRotate);
     }
 
     void RotatePlatform(float value)
